@@ -32,7 +32,7 @@ render() {
     return (
         <div>
             <nav className="fixed top-0 w-100 z-1">
-                <ul className="list top-0">
+                <ul className="list top-0 ml3 ml0-ns">
                     <li className="grow fl black f2-ns f3 dim dib pv3 mt0-ns mt2 ml5-m pointer">
                        <span onClick={() => onRouteChange('homepage')}>  NL Album </span>
                     </li>

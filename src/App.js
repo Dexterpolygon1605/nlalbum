@@ -12,11 +12,13 @@ const initialState = {
   inAlbums: false
 }
 
+
 class App extends Component {
   constructor() {
     super();
     this.state = initialState
   }
+
 
   onRouteChange = (route) => {
     if (route === 'homepage') {
@@ -35,7 +37,26 @@ class App extends Component {
     document.getElementById('dropD').style.display = 'none';
   }
 
+
+
+
   render() {
+
+    window.addEventListener('scroll', reveal);
+    function reveal(){
+      let reveals = document.querySelectorAll('.reveal');
+      for(let i = 0; i < reveals.length; i++){
+        let windowHeight= window.innerHeight;
+        let revealTop = reveals[i].getBoundingClientRect().top;
+        let revealPoint = 150;
+        if(revealTop < windowHeight - revealPoint){
+          reveals[i].classList.add('active')
+        }else{
+          reveals[i].classList.remove('active');
+        }
+      }
+    }
+
     const { inAlbums, route } = this.state;
     return (
       <div className="App">

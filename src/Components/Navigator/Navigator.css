@@ -60,3 +60,8 @@ input{
 .searchBtn{
   background-color: darkgray;
 }
+
+textarea{
+  color: white;
+  background-color: darkgray;
+}

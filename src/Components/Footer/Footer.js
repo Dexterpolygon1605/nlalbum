@@ -4,7 +4,7 @@ import github from './github.png'
 class Footer extends React.Component {
     render() {
         return (
-            <footer class="pa4 pa5-l black-70 bt b--black-10 mt4">
+            <footer class="pa4 pa5-l black-70 bt b--black-10 mt4 reveal">
                 <div class="mb4-l cf">
                     <h1 class="fc w-100 pv0 f3 f2-ns fw6 ttu tracked mb4">Contacts</h1>
                     <article class="fc w-50 w-auto-ns mb4 dib">
