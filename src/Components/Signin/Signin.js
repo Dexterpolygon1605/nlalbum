@@ -4,8 +4,8 @@ class Signin extends React.Component {
     render() {
         return (
             <div>
-                <form class="pa4 black-80 center mt6 ba br3 w-50-ns w-80">
-                    <div class="measure center">
+                <form class="pa4 gray-80 center ba-ns br3-ns mt6 w-50-ns w-80">
+                    <div class="measure center pv4 z-2">
                         <div class="f3 b db mb2 tc mb4">Sign in</div>
                         <label for="name" class="f6 b db mb2 tl">Name: <span class="normal black-60"></span></label>
                         <input id="name" name="name" class="input-reset ba b--black-20 pa2 mb2 db w-100" type="text" aria-describedby="name-desc" />

@@ -21,12 +21,19 @@ class App extends Component {
   onRouteChange = (route) => {
     if (route === 'homepage') {
       this.setState(initialState)
+      this.navDefault();
     } else if (route === 'albums') {
       this.setState({ inAlbums: true })
+      this.navDefault();
     }
+    this.navDefault();
     this.setState({ route: route });
   }
 
+  navDefault = () => {
+    document.getElementById('main-nav').style.display = 'none';
+    document.getElementById('dropD').style.display = 'none';
+  }
 
   render() {
     const { inAlbums, route } = this.state;
@@ -39,8 +46,8 @@ class App extends Component {
           : (route === 'signin'
             ? <Signin inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
             : (route === 'signup'
-            ? <Signup inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
-            : <Support inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
+              ? <Signup inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
+              : <Support inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
             )
           )
         }

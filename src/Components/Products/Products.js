@@ -5,7 +5,7 @@ class Products extends React.Component {
     render() {
         return (
             <div>
-                <article className="mt4">
+                <article className="mt6">
                     <h2 class="f1 fw4 pa3 mv0">Albums</h2>
                     <div class="cf pa2 mt4">
                         <div class="fl w-50 w-25-m w-20-l pa2">
