@@ -19,22 +19,28 @@ const initialState = {
     joined: '',
   },
   songs: {
-    id: '',
     name: '',
     artist: '',
-    numFavorites: '',
-    type: '',
-    image: ''
+    numfavorites: '',
+    type: ''
   }
 }
+
 
 
 class App extends Component {
   constructor() {
     super();
     this.state = initialState
-    }
+  }
 
+  addSongs = () => {
+    fetch('http://localhost:3000/songs/1', { method: 'get' })
+    .then(response => response.json())
+    .then(song => {
+             this.loadSong(song);
+    })
+  }
 
   favoritesCount = () => {
     fetch('http://localhost:3000/favorites', {
@@ -66,25 +72,24 @@ class App extends Component {
     })
   }
 
-  
-  loadSongs = (data) => {
+  loadSong = (data) => {
     this.setState({
       songs: {
-        id: data.id,
-        name: data.name,
+        name: data.namesong,
         artist: data.artist,
-        numFavorites: data.numFavorites,
-        type: data.type,
-        image: data.image
+        numfavorites: data.numfavorites,
+        type: data.typesong
       }
     })
   }
+
 
   onRouteChange = (route) => {
     if (route === 'homepage') {
       this.setState(initialState)
       this.navDefault();
     } else if (route === 'homepageAcc') {
+      this.addSongs();
       this.setState({ inAcc: true })
       this.navDefault();
     }
@@ -107,6 +112,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.songs);
 
     window.addEventListener('scroll', reveal);
     function reveal() {
@@ -129,17 +135,23 @@ class App extends Component {
         <Navigator inAcc={inAcc} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
 
         {route === 'homepage' || route === 'homepageAcc'
-          ? <Products favoriteBtn={this.favoriteBtn} onRouteChange={this.onRouteChange} />
+          ?<Products
+            name={this.state.songs.name}
+            numfavorites={this.state.songs.numfavorites}
+            artist={this.state.songs.artist}
+            favoriteBtn={this.favoriteBtn}
+            onRouteChange={this.onRouteChange}
+            inAcc={inAcc} />
           : (route === 'signin'
             ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
             : (route === 'signup'
               ? <Signup loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
               : (route === 'profile'
-                ? <Profile 
-                name={this.state.user.name}
-                favorites={this.state.user.favorites} 
-                email={this.state.user.email} 
-                onRouteChange={this.onRouteChange} />
+                ? <Profile
+                  name={this.state.user.name}
+                  favorites={this.state.user.favorites}
+                  email={this.state.user.email}
+                  onRouteChange={this.onRouteChange} />
                 : <Support onRouteChange={this.onRouteChange} />
               )
             )
