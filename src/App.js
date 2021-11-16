@@ -6,10 +6,26 @@ import Support from './Components/Support/Support';
 import Signin from './Components/Signin/Signin';
 import Signup from './Components/Signup/Signup';
 import Footer from './Components/Footer/Footer';
+import Profile from './Components/Profile/Profile';
 
 const initialState = {
   route: 'homepage',
-  inAlbums: false
+  inAcc: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    favorites: 1,
+    joined: '',
+  },
+  songs: {
+    id: '',
+    name: '',
+    artist: '',
+    numFavorites: '',
+    type: '',
+    image: ''
+  }
 }
 
 
@@ -17,15 +33,59 @@ class App extends Component {
   constructor() {
     super();
     this.state = initialState
+    }
+
+
+  favoritesCount = () => {
+    fetch('http://localhost:3000/favorites', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: this.state.user.id,
+      })
+    })
+      .then(response => response.json())
+      .then(count => {
+        this.setState(Object.assign(this.state.user, { favorites: count }))
+      })
   }
 
+  favoriteBtn = () => {
+    this.favoritesCount();
+  }
+
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        favorites: data.favorites,
+        joined: data.joined,
+      }
+    })
+  }
+
+  
+  loadSongs = (data) => {
+    this.setState({
+      songs: {
+        id: data.id,
+        name: data.name,
+        artist: data.artist,
+        numFavorites: data.numFavorites,
+        type: data.type,
+        image: data.image
+      }
+    })
+  }
 
   onRouteChange = (route) => {
     if (route === 'homepage') {
       this.setState(initialState)
       this.navDefault();
-    } else if (route === 'albums') {
-      this.setState({ inAlbums: true })
+    } else if (route === 'homepageAcc') {
+      this.setState({ inAcc: true })
       this.navDefault();
     }
     this.navDefault();
@@ -38,37 +98,50 @@ class App extends Component {
   }
 
 
-
+  onChangeProfile = () => {
+    if (document.getElementById('main-nav-profile').style.display === 'none') {
+      document.getElementById('main-nav-profile').style.display = 'block';
+    } else if (document.getElementById('main-nav-profile').style.display === 'block') {
+      document.getElementById('main-nav-profile').style.display = 'none';
+    }
+  }
 
   render() {
 
     window.addEventListener('scroll', reveal);
-    function reveal(){
+    function reveal() {
       let reveals = document.querySelectorAll('.reveal');
-      for(let i = 0; i < reveals.length; i++){
-        let windowHeight= window.innerHeight;
+      for (let i = 0; i < reveals.length; i++) {
+        let windowHeight = window.innerHeight;
         let revealTop = reveals[i].getBoundingClientRect().top;
         let revealPoint = 150;
-        if(revealTop < windowHeight - revealPoint){
+        if (revealTop < windowHeight - revealPoint) {
           reveals[i].classList.add('active')
-        }else{
+        } else {
           reveals[i].classList.remove('active');
         }
       }
     }
 
-    const { inAlbums, route } = this.state;
+    const { route, inAcc } = this.state;
     return (
       <div className="App">
-        <Navigator inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
+        <Navigator inAcc={inAcc} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
 
-        {route === 'homepage'
-          ? <Products inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
+        {route === 'homepage' || route === 'homepageAcc'
+          ? <Products favoriteBtn={this.favoriteBtn} onRouteChange={this.onRouteChange} />
           : (route === 'signin'
-            ? <Signin inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
+            ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
             : (route === 'signup'
-              ? <Signup inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
-              : <Support inAlbums={inAlbums} onRouteChange={this.onRouteChange} />
+              ? <Signup loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+              : (route === 'profile'
+                ? <Profile 
+                name={this.state.user.name}
+                favorites={this.state.user.favorites} 
+                email={this.state.user.email} 
+                onRouteChange={this.onRouteChange} />
+                : <Support onRouteChange={this.onRouteChange} />
+              )
             )
           )
         }
