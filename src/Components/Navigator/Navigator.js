@@ -26,7 +26,7 @@ class Navigator extends React.Component {
         if (inAcc) {
             return (
                 <div>
-                    <nav className="fixed top-0 w-100 z-1">
+                    <nav className="fixed top-0 w-100 z-1 overflow-hidden">
                         <ul className="list top-0">
                             <li className="grow fl black f2-ns f3 dim dib pv3 mt0-ns mt2 ml0-ns ml3 ml5-m pointer">
                                 <span onClick={() => onRouteChange('homepageAcc')}>  NL Album </span>

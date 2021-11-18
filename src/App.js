@@ -7,6 +7,7 @@ import Signin from './Components/Signin/Signin';
 import Signup from './Components/Signup/Signup';
 import Footer from './Components/Footer/Footer';
 import Profile from './Components/Profile/Profile';
+import Modal from './Components/Modal/Modal';
 
 const initialState = {
   route: 'homepage',
@@ -16,30 +17,15 @@ const initialState = {
     name: '',
     email: '',
     favorites: 1,
-    joined: '',
-  },
-  songs: {
-    name: '',
-    artist: '',
-    numfavorites: '',
-    type: ''
+    joined: ''
   }
 }
-
 
 
 class App extends Component {
   constructor() {
     super();
     this.state = initialState
-  }
-
-  addSongs = () => {
-    fetch('http://localhost:3000/songs/1', { method: 'get' })
-    .then(response => response.json())
-    .then(song => {
-             this.loadSong(song);
-    })
   }
 
   favoritesCount = () => {
@@ -72,24 +58,12 @@ class App extends Component {
     })
   }
 
-  loadSong = (data) => {
-    this.setState({
-      songs: {
-        name: data.namesong,
-        artist: data.artist,
-        numfavorites: data.numfavorites,
-        type: data.typesong
-      }
-    })
-  }
-
 
   onRouteChange = (route) => {
     if (route === 'homepage') {
       this.setState(initialState)
       this.navDefault();
     } else if (route === 'homepageAcc') {
-      this.addSongs();
       this.setState({ inAcc: true })
       this.navDefault();
     }
@@ -112,7 +86,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.songs);
 
     window.addEventListener('scroll', reveal);
     function reveal() {
@@ -133,12 +106,10 @@ class App extends Component {
     return (
       <div className="App">
         <Navigator inAcc={inAcc} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+        <Modal/>
 
         {route === 'homepage' || route === 'homepageAcc'
-          ?<Products
-            name={this.state.songs.name}
-            numfavorites={this.state.songs.numfavorites}
-            artist={this.state.songs.artist}
+          ? <Products
             favoriteBtn={this.favoriteBtn}
             onRouteChange={this.onRouteChange}
             inAcc={inAcc} />
