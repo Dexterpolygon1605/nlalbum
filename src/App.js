@@ -11,6 +11,7 @@ import Modal from './Components/Modal/Modal';
 
 const initialState = {
   route: 'homepage',
+  searchfield: '',
   inAcc: false,
   user: {
     id: '',
@@ -28,6 +29,17 @@ class App extends Component {
     this.state = initialState
   }
 
+  updateFavorite = (id) => {
+    fetch('http://localhost:3000/songs/favorites', {
+        method: 'put',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: id,
+        })
+    })
+        .then(response => response.json())
+}
+
   favoritesCount = () => {
     fetch('http://localhost:3000/favorites', {
       method: 'put',
@@ -42,7 +54,8 @@ class App extends Component {
       })
   }
 
-  favoriteBtn = () => {
+  favoriteBtn = (id) => {
+    this.updateFavorite(id);
     this.favoritesCount();
   }
 
@@ -105,9 +118,8 @@ class App extends Component {
     const { route, inAcc } = this.state;
     return (
       <div className="App">
-        <Navigator inAcc={inAcc} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
-        <Modal/>
-
+        <Navigator inAcc={inAcc} loadUser={this.loadUser} onRouteChange={this.onRouteChange} onChangeSearch={this.onChangeSearch}/>
+        <Modal />
         {route === 'homepage' || route === 'homepageAcc'
           ? <Products
             favoriteBtn={this.favoriteBtn}

@@ -16,11 +16,10 @@ const Products = ({ onRouteChange, favoriteBtn, inAcc }) => {
             console.error(err.message)
         }
     }
-
     useEffect(() => {
         getTodos();
     }, []);
-
+    
 
     if (inAcc) {
         return (
@@ -28,20 +27,16 @@ const Products = ({ onRouteChange, favoriteBtn, inAcc }) => {
                 <div className="w-100">
                     <article className="mt6 bg-light-gray">
                         <h2 className="f1 fw4 pa3 mv0">Albums</h2>
-                        <div className="cf pa2">
+                        <div className="cf">
                             {todos.map(todo => (
-                                <div className="fl w-50 w-25-m w-20-ns pa3">
-                                    <a href={`${todo.linksong}`} className="db link tc">
-                                        <img src={`${todo.image}`} alt="Album Cover" className="w-100 dim db outline black-10" />
+                                <div className="dib tc center hidden w-30-ns w-80 grow pa3">
+                                    <a href={`${todo.linksong}`} className="link">
+                                        <img src={`${todo.image}`} alt="Album Cover" className="w-100 dim" />
                                     </a>
-                                    <dl className="mt2 f6 lh-copy">
-                                        <dt className="clip">Title</dt>
-                                        <dd className="ml0 black truncate w-100">{todo.namesong} <BiHeart onClick={favoriteBtn} style={{ fontSize: '15px', cursor: 'pointer' }} className="grow-large" /> {todo.numfavorites} </dd>
-
-
-                                        <dt className="clip">Artist</dt>
-                                        <dd className="ml0 gray truncate w-100">{todo.artist}</dd>
-                                    </dl>
+                                    <div>
+                                        <div> {todo.namesong} <button className="b--transparent"><BiHeart onClick={() => favoriteBtn(todo.id)} style={{ fontSize: '15px', cursor: 'pointer' }} className="grow-large" /></button> {todo.numfavorites} </div>
+                                        <div className="gray">{todo.artist}</div>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -52,23 +47,20 @@ const Products = ({ onRouteChange, favoriteBtn, inAcc }) => {
     } else {
         return (
             <Fragment>
+                {" "}
                 <div className="w-100">
                     <article className="mt6 bg-light-gray">
                         <h2 className="f1 fw4 pa3 mv0">Albums</h2>
                         <div className="cf pa2">
                             {todos.map(todo => (
-                                <div className="fl w-50 w-25-m w-20-ns pa3">
-                                    <a href={`${todo.linksong}`} className="db link tc">
-                                        <img src={`${todo.image}`} alt="Album Cover" className="w-100 dim db outline black-10" />
+                                <div className="dib tc center hidden shadow-5 w-30-ns w-80 grow pa3 ma3">
+                                    <a href={`${todo.linksong}`}>
+                                        <img src={`${todo.image}`} alt="Album Cover" className="w-100" />
                                     </a>
-                                    <dl className="mt2 f6 lh-copy">
-                                        <dt className="clip">Title</dt>
-                                        <dd className="ml0 black truncate w-100">{todo.namesong} <BiHeart onClick={() => onRouteChange('signin')} style={{ fontSize: '15px', cursor: 'pointer' }} className="grow-large" /> {todo.numfavorites} </dd>
-
-
-                                        <dt className="clip">Artist</dt>
-                                        <dd className="ml0 gray truncate w-100">{todo.artist}</dd>
-                                    </dl>
+                                    <div>
+                                        <div>{todo.namesong} <button className="b--transparent"><BiHeart onClick={() => onRouteChange('signin')} style={{ fontSize: '15px', cursor: 'pointer' }} className="grow-large" /> </button> <span> {todo.numfavorites} </span></div>
+                                        <div className="gray">{todo.artist}</div>
+                                    </div>
                                 </div>
                             ))}
                         </div>

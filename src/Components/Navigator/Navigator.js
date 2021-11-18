@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import './Navigator.css'
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { ImMenu3 } from 'react-icons/im';
 import { BsArrowRightShort } from 'react-icons/bs';
 
-class Navigator extends React.Component {
-    btnMenu = () => {
+const Navigator = ({ onRouteChange, inAcc }) => {
+
+    const btnMenu = () => {
         if (document.getElementById('main-nav').style.display === 'none') {
             document.getElementById('main-nav').style.display = 'block';
         } else if (document.getElementById('main-nav').style.display === 'block') {
@@ -14,15 +15,14 @@ class Navigator extends React.Component {
         }
     }
 
-    btnAlbums = () => {
+    const btnAlbums = () => {
         if (document.getElementById('dropD').style.display === 'none') {
             document.getElementById('dropD').style.display = 'block';
         } else if (document.getElementById('dropD').style.display === 'block') {
             document.getElementById('dropD').style.display = 'none';
         }
     }
-    render() {
-        const { onRouteChange, inAcc } = this.props;
+    
         if (inAcc) {
             return (
                 <div>
@@ -32,10 +32,10 @@ class Navigator extends React.Component {
                                 <span onClick={() => onRouteChange('homepageAcc')}>  NL Album </span>
                             </li>
                             <li className="dib-ns dn pv2 ml5-ns ml3 mr0-ns ml5-m">
-                                <p onClick={this.btnAlbums} className="btn link dib pa2 pv2 black pointer grow mb0 z-2"><ImMenu3 style={{ fontSize: '15px' }} /><span> Albums </span></p>
+                                <p onClick={btnAlbums} className="btn link dib pa2 pv2 black pointer grow mb0 z-2"><ImMenu3 style={{ fontSize: '15px' }} /><span> Albums </span></p>
                             </li>
                             <li className="dn-ns dib pv2 ml5-ns ml3">
-                                <p onClick={this.btnMenu} className="link dib pa2 pv2 black ba br2 pointer grow dim mb0 ml0-ns ml3"><ImMenu3 style={{ fontSize: '15px' }} /><span> Menu </span></p>
+                                <p onClick={btnMenu} className="link dib pa2 pv2 black ba br2 pointer grow dim mb0 ml0-ns ml3"><ImMenu3 style={{ fontSize: '15px' }} /><span> Menu </span></p>
                             </li>
                             <li className="dib pv2 w-40-ns w-100-m w-100 tl ml4-ns ml5-m mr0-ns">
                                 <input className="gray white pa2 b--transparent br3 grow mr1 w-70 ml0-ns ml3" type="text" placeholder="Search.." name="search" />
@@ -88,10 +88,10 @@ class Navigator extends React.Component {
                                 <span onClick={() => onRouteChange('homepage')}>  NL Album </span>
                             </li>
                             <li className="dib-ns dn pv2 ml5-ns ml3 mr0-ns ml5-m">
-                                <p onClick={this.btnAlbums} className="btn link dib pa2 pv2 black pointer grow mb0 z-2"><ImMenu3 style={{ fontSize: '15px' }} /><span> Albums </span></p>
+                                <p onClick={btnAlbums} className="btn link dib pa2 pv2 black pointer grow mb0 z-2"><ImMenu3 style={{ fontSize: '15px' }} /><span> Albums </span></p>
                             </li>
                             <li className="dn-ns dib pv2 ml5-ns ml3">
-                                <p onClick={this.btnMenu} className="link dib pa2 pv2 black ba br2 pointer grow dim mb0 ml0-ns ml3"><ImMenu3 style={{ fontSize: '15px' }} /><span> Menu </span></p>
+                                <p onClick={btnMenu} className="link dib pa2 pv2 black ba br2 pointer grow dim mb0 ml0-ns ml3"><ImMenu3 style={{ fontSize: '15px' }} /><span> Menu </span></p>
                             </li>
                             <li className="dib pv2 w-40-ns w-100-m w-100 tl ml4-ns ml5-m mr0-ns">
                                 <input className="gray white pa2 b--transparent br3 grow mr1 w-70 ml0-ns ml3" type="text" placeholder="Search.." name="search" />
@@ -106,7 +106,7 @@ class Navigator extends React.Component {
                         </ul>
 
                         <nav id="main-nav" style={{ display: 'none' }} className="dn-ns ba">
-                            <p href="0#" onClick={this.btnAlbums} className="link db dib-l pa2 pv2 color-inherit mr2-ns ml0-ns ml3 ba br2 pointer grow dim w-90"><ImMenu3 style={{ fontSize: '15px' }} /> Albums</p>
+                            <p href="0#" onClick={btnAlbums} className="link db dib-l pa2 pv2 color-inherit mr2-ns ml0-ns ml3 ba br2 pointer grow dim w-90"><ImMenu3 style={{ fontSize: '15px' }} /> Albums</p>
                             <p onClick={() => onRouteChange('support')} href="0#" className="link db dib-l pa2 pv2 color-inherit mr2-ns ml0-ns ml3 ba br2 pointer grow dim w-90">Support</p>
                             <p onClick={() => onRouteChange('signin')} className="link db dib-l pa2 pv2 color-inherit mr2-ns ml0-ns ml3 ba br2 pointer grow dim w-90">Sign in</p>
                         </nav>
@@ -118,7 +118,7 @@ class Navigator extends React.Component {
                         </div>
 
                         <nav id="main-nav-profile" style={{ display: 'none' }} className="dn-ns ba">
-                            <p href="0#" onClick={this.btnAlbums} className="link db dib-l pa2 pv2 color-inherit mr2-ns ml0-ns ml3 ba br2 pointer grow dim w-90"><ImMenu3 style={{ fontSize: '15px' }} /> Albums</p>
+                            <p href="0#" onClick={btnAlbums} className="link db dib-l pa2 pv2 color-inherit mr2-ns ml0-ns ml3 ba br2 pointer grow dim w-90"><ImMenu3 style={{ fontSize: '15px' }} /> Albums</p>
                             <p onClick={() => onRouteChange('support')} href="0#" className="link db dib-l pa2 pv2 color-inherit mr2-ns ml0-ns ml3 ba br2 pointer grow dim w-90">Support</p>
                             <p onClick={() => onRouteChange('signin')} className="link db dib-l pa2 pv2 color-inherit mr2-ns ml0-ns ml3 ba br2 pointer grow dim w-90">Profile</p>
                         </nav>
@@ -134,6 +134,5 @@ class Navigator extends React.Component {
         }
 
     }
-}
 
 export default Navigator;
